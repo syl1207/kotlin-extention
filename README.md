@@ -1,7 +1,7 @@
-#常用kotlin扩展库(持续更新)
+#  常用kotlin扩展库(持续更新)
 
-##View
-- #####TextView.drawableLeft(right/Top/Bottom)
+## View
+- ##### TextView.drawableLeft(right/Top/Bottom)
 >给textView设置CompoundDrawables
 
 ```kotlin
@@ -9,7 +9,7 @@ textView.drawableLeft(R.mipmap.ic_launcher, 10)
 textView.drawableTop(R.mipmap.ic_launcher)
 
 ```
-- #####TextView.pressedBackground
+- ##### TextView.pressedBackground
 > 给TextView快速设置background selector
 
 ```kotlin
@@ -39,23 +39,16 @@ view.fullWidthWrapHeight()
 view.wrapWidthFullHeight()
 ```
 
-```kotlin
-it.matchParent()
-it.wrapContent()
-it.fullWidthWrapHeight()
-it.wrapWidthFullHeight()
-```
 
-
-##Bitmap
-- #####Bitmap.compress
+## Bitmap
+- ##### Bitmap.compress
 >压缩bitmap为指定大小的byte数组
 
 ```kotlin
 bitmap.compress(30_000)
 ```
 
-- #####Bitmap.scale
+- ##### Bitmap.scale
 >缩放bitmap到指定宽高或者指定比例
 
 ```kotlin
@@ -63,77 +56,77 @@ bitmap.scale(800,600)
 bitmap.scale(1.5f)
 ```
 
-- ####Bitmap.rotate
+- #### Bitmap.rotate
 >旋转bitmap
 
 ```kotlin
 bitmap.rotate(90f)
 ```
-- ####Bitmap.toJpegBytes
+- #### Bitmap.toJpegBytes
 >bitmap转换为jpeg格式的byte数组
 
 ```kotlin
 bitmap.toJpegBytes()
 ```
-- ####Bitmap.save
+- #### Bitmap.save
 >将bitmap保存为JPEG格式的文件
 
 ```kotlin
 img.drawToBitmap().save(file)
 ```
 
-- ####ByteArray.nv21ToBitmap
+- #### ByteArray.nv21ToBitmap
 > 将nv21数据解析成bitmap?
 
 ```kotlin
 byteArray.nv21ToBitmap(640,480)
 ```
-##fastjson
+## fastjson
 
-- ####toJsonObjectOrNull
+- #### String.toJsonObjectOrNull
 > 将json格式的字符串解析成JSONObject?
 
 ```kotlin
 str.toJsonObjectOrNull()
 ```
 
-- ####String.toJsonArrayOrNull
+- #### String.toJsonArrayOrNull
 > 将json格式字符串解析成JSONArray?
 
 ```kotlin
 str.toJsonObjectOrNull()
 ```
 
-- ####String.toObjectOrNull
+- #### String.toObjectOrNull
 > 将json格式字符串解析成T?
 
 ```kotlin
 str.toObjectOrNull<KItem>()
 ```
 
-- ####String.toObjectListOrNull
+- #### String.toObjectListOrNull
 > 将json格式字符串解析成List<T>?
 
 ```kotlin
 str.toObjectListOrNull<KItem>()
 ```
 
-- ####JSONArray.toObjectListOrNull
+- #### JSONArray.toObjectListOrNull
 > 将JSONArray解析成List<T>?
 
 ```kotlin
 array.toObjectListOrNull<KItem>()
 ```
 
-##Context
+## Context
 
-- ####Context.readAssets
+- #### Context.readAssets
 > 读取assets下面文件为string
 
 ```kotlin
 context.readAssets("abc.txt")
 ```
-- ####Context.hasPermission
+- #### Context.hasPermission
 > 是否有权限
 
 ```kotlin
@@ -146,15 +139,15 @@ context.hasPermission(
         )
 ```
 
-- ####Context.getScreenWidth
+- #### Context.getScreenWidth
 > 获取屏幕宽高
 
 
-- ####Context.dp2Px
+- #### Context.dp2Px
 > dp 转为px
 
 
-##其他
-- ####InputStream.toByteArray
+## 其他
+- #### InputStream.toByteArray
 > inputStream 转为byte数组
 
