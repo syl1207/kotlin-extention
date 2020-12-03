@@ -16,7 +16,7 @@ class ViewTestActivity : AppCompatActivity() {
                 drawableTest.drawableLeft(R.mipmap.ic_launcher, 10)
                 it.tag = "left"
             } else if (tag == "left") {
-                drawableTest.drawableTop(R.mipmap.ic_launcher, 10)
+                drawableTest.drawableTop(R.mipmap.ic_launcher)
                 it.tag = "top"
             } else if (tag == "top") {
                 drawableTest.drawableTop(null, 0)
@@ -33,6 +33,23 @@ class ViewTestActivity : AppCompatActivity() {
             } else {
                 textView?.pressedStateBackground("#ff0000", "#66ff0000", 20f)
             }
+        }
+
+        layoutParamTest.setOnClickListener {
+            val tag = it.tag
+            if (tag == null) {
+//                it.matchParent()
+                it.fullWidthWrapHeight()
+                it.tag = "A"
+            } else {
+//                it.wrapContent()
+                it.wrapWidthFullHeight()
+                it.tag = null
+            }
+        }
+
+        fastClick.setNoFastClickListener {
+            "click--".log()
         }
     }
 }

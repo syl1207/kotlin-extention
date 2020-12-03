@@ -10,6 +10,7 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 
@@ -19,6 +20,12 @@ fun TextView.drawableTop(id: Int?, drawablePadding: Int = 0) {
 
 fun TextView.drawableLeft(id: Int?, drawablePadding: Int = 0) {
     customCompoundDrawables(leftId = id, drawablePadding = drawablePadding)
+}
+fun TextView.drawableBottom(id: Int?, drawablePadding: Int = 0) {
+    customCompoundDrawables(bottomId = id, drawablePadding = drawablePadding)
+}
+fun TextView.drawableRight(id: Int?, drawablePadding: Int = 0) {
+    customCompoundDrawables(rightId = id, drawablePadding = drawablePadding)
 }
 
 fun TextView.customCompoundDrawables(
@@ -107,7 +114,7 @@ private fun pressedStateColor(pressedColor: Int, normalColor: Int): ColorStateLi
 }
 
 
-fun View.setNoFastClickListener(onClick: (View) -> Unit, time: Long = 800L) {
+fun View.setNoFastClickListener(onClick: (View) -> Unit) {
     var canClick = true
     setOnClickListener {
         if (canClick) {
@@ -115,21 +122,34 @@ fun View.setNoFastClickListener(onClick: (View) -> Unit, time: Long = 800L) {
             onClick(it)
             postDelayed({
                 canClick = true
-            }, time)
+            }, 800L)
         }
     }
 }
 
 fun View.matchParent() {
-    layoutParams = ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.MATCH_PARENT
-    )
+    val params = layoutParams ?: return
+    params.width = ViewGroup.LayoutParams.MATCH_PARENT
+    params.height = ViewGroup.LayoutParams.MATCH_PARENT
+    layoutParams = params
 }
 
 fun View.fullWidthWrapHeight() {
-    layoutParams = ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT
-    )
+    val params = layoutParams ?: return
+    params.width = ViewGroup.LayoutParams.MATCH_PARENT
+    params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+    layoutParams = params
+}
+fun View.wrapWidthFullHeight() {
+    val params = layoutParams ?: return
+    params.width = ViewGroup.LayoutParams.WRAP_CONTENT
+    params.height = ViewGroup.LayoutParams.MATCH_PARENT
+    layoutParams = params
+}
+
+fun View.wrapContent() {
+    val params = layoutParams ?: return
+    params.width = ViewGroup.LayoutParams.WRAP_CONTENT
+    params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+    layoutParams = params
 }

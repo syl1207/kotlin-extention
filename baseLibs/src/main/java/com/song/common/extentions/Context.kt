@@ -26,7 +26,6 @@ fun Context.drawable(id: Int): Drawable? {
 }
 
 
-
 /**
  * reduce code length
  */
