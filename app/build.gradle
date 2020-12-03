@@ -31,6 +31,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
@@ -43,5 +47,6 @@ dependencies {
 
     implementation 'com.alibaba:fastjson:1.2.75'
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+//    implementation 'com.syl1207.common:kotlin-extentions:0.0.1'
     implementation project(":baseLibs")
 }

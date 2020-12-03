@@ -27,8 +27,8 @@ class FastJsonTestActivity : AppCompatActivity() {
         showMsg("原始json : $str", true)
 
         str.toJsonObjectOrNull()?.let {
-            showMsg(it.string("id") ?: "")
-            showMsg(it.string("name") ?: "")
+            showMsg(it.string("id"))
+            showMsg(it.string("name"))
 
             it.toObjectOrNull<KItem>()?.let { item ->
                 showMsg(item.toString())

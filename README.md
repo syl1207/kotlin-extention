@@ -42,7 +42,7 @@ view.wrapWidthFullHeight()
 
 ## Bitmap
 - ##### Bitmap.compress
->压缩bitmap为指定大小的byte数组
+>压缩bitmap为指定大小的byte数组(降低图片质量)
 
 ```kotlin
 bitmap.compress(30_000)
