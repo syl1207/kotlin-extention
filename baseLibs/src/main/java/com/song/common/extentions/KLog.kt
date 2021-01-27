@@ -1,6 +1,5 @@
 package com.song.common.extentions
 
-import android.os.Build
 import android.os.Environment
 import android.util.Log
 import java.io.BufferedWriter
@@ -10,11 +9,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executors
 
-abstract class LogController {
-    abstract fun getLogFolder(): File
-    abstract fun shouldLog(): Boolean
-    abstract fun checkLogFiles()
-    class Default : LogController() {
+interface LogController {
+    fun getLogFolder(): File
+    fun shouldLog(): Boolean
+
+    fun getMaxLogFiles(): Int
+
+    fun getLogFileNameFormat(): SimpleDateFormat
+
+    class Default : LogController {
         private val folder = Environment.getExternalStorageDirectory().toString() + "/cm/log/"
         override fun getLogFolder(): File {
             return File(folder)
@@ -24,18 +27,27 @@ abstract class LogController {
             return true
         }
 
-        override fun checkLogFiles() {
+        override fun getMaxLogFiles(): Int {
+            return 5
+        }
 
+        override fun getLogFileNameFormat(): SimpleDateFormat {
+            return SimpleDateFormat("yyyyMMddHHmm", Locale.CHINA)
         }
     }
 }
 
 object KLog {
-    private val fileNameDateFormat = SimpleDateFormat("yyyyMMdd", Locale.CHINA)
     private var logController: LogController = LogController.Default()
     private val writeService = Executors.newSingleThreadExecutor()
+    private val logFileFormat: SimpleDateFormat by lazy {
+        logController.getLogFileNameFormat()
+    }
 
-    fun applyLogController(logEngine: LogController) {
+    /**
+     * logFileFormat做了缓存
+     */
+    fun overrideLogController(logEngine: LogController) {
         this.logController = logEngine
     }
 
@@ -43,20 +55,25 @@ object KLog {
     fun saveLog(string: String) {
         if (logController.shouldLog().not()) return
         writeService.execute {
+            val folder = logController.getLogFolder()
             try {
-                val folder = logController.getLogFolder()
                 if (!folder.exists()) folder.mkdirs()
                 val logFile =
-                    File(folder, "${fileNameDateFormat.format(Date())}_${Build.SERIAL}.log")
-                if (!logFile.exists()) logFile.createNewFile()
-                val bufferedWriter = BufferedWriter(FileWriter(logFile, true))
-                bufferedWriter.use {
+                    File(folder, "${logFileFormat.format(Date())}.log")
+                if (!logFile.exists()) {
+                    //创建文件的时候进行一次检测
+                    val count = folder.list()?.size ?: 0
+                    if (count >= logController.getMaxLogFiles()) {
+                        folder.listFiles()?.get(0)?.delete()
+                    }
+                    logFile.createNewFile()
+                }
+                val writer = BufferedWriter(FileWriter(logFile, true))
+                writer.use {
                     it.write(df.format(Date()) + ":" + string + "\n")
                     it.flush()
                 }
             } catch (e: Exception) {
-            } finally {
-                logController.checkLogFiles()
             }
         }
     }

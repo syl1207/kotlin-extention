@@ -38,7 +38,6 @@ class ViewTestActivity : AppCompatActivity() {
         layoutParamTest.setOnClickListener {
             val tag = it.tag
             if (tag == null) {
-//                it.matchParent()
                 it.fullWidthWrapHeight()
                 it.tag = "A"
             } else {
@@ -52,4 +51,5 @@ class ViewTestActivity : AppCompatActivity() {
             "click--".log()
         }
     }
+
 }

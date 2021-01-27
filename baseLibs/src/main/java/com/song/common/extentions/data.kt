@@ -5,6 +5,8 @@ import android.text.Html
 import android.text.Spanned
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -59,6 +61,24 @@ fun SimpleDateFormat.safeParse(str: String?): Date? {
     return try {
         parse(str)
     } catch (e: java.lang.Exception) {
+        null
+    }
+}
+fun String.md5(src: String): String? {
+    return try {
+        val md5: MessageDigest = MessageDigest.getInstance("MD5")
+        md5.update(src.toByteArray())
+        val encryption: ByteArray = md5.digest()
+        val result = StringBuilder()
+        for (b in encryption) {
+            if (Integer.toHexString(0xff and b.toInt()).length == 1) {
+                result.append("0").append(Integer.toHexString(0xff and b.toInt()))
+            } else {
+                result.append(Integer.toHexString(0xff and b.toInt()))
+            }
+        }
+        result.toString()
+    } catch (e: NoSuchAlgorithmException) {
         null
     }
 }

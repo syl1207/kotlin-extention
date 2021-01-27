@@ -4,8 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.content.res.Configuration
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
@@ -40,6 +41,29 @@ fun Context.hasPermission(permissions: Array<String>): Boolean {
     return true
 }
 
+fun Context.versionCode(): Long {
+    return try {
+        val packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            packageInfo.longVersionCode
+        } else {
+            packageInfo.versionCode.toLong()
+        }
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+        0L
+    }
+}
+
+fun Context.versionName(): String? {
+    return try {
+        packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES).versionName
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+        null
+    }
+}
+
 fun Context.getScreenWidth(): Int {
     val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
     val outMetrics = DisplayMetrics()
@@ -52,6 +76,10 @@ fun Context.getScreenHeight(): Int {
     val outMetrics = DisplayMetrics()
     windowManager.defaultDisplay.getMetrics(outMetrics)
     return outMetrics.heightPixels
+}
+
+fun Context.isScreenPortrait(): Boolean {
+    return resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 }
 
 

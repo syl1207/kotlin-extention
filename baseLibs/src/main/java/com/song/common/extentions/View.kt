@@ -10,9 +10,12 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import com.song.common.extentions.other.InputKt
 
 fun TextView.drawableTop(id: Int?, drawablePadding: Int = 0) {
     customCompoundDrawables(topId = id, drawablePadding = drawablePadding)
@@ -21,9 +24,11 @@ fun TextView.drawableTop(id: Int?, drawablePadding: Int = 0) {
 fun TextView.drawableLeft(id: Int?, drawablePadding: Int = 0) {
     customCompoundDrawables(leftId = id, drawablePadding = drawablePadding)
 }
+
 fun TextView.drawableBottom(id: Int?, drawablePadding: Int = 0) {
     customCompoundDrawables(bottomId = id, drawablePadding = drawablePadding)
 }
+
 fun TextView.drawableRight(id: Int?, drawablePadding: Int = 0) {
     customCompoundDrawables(rightId = id, drawablePadding = drawablePadding)
 }
@@ -140,6 +145,7 @@ fun View.fullWidthWrapHeight() {
     params.height = ViewGroup.LayoutParams.WRAP_CONTENT
     layoutParams = params
 }
+
 fun View.wrapWidthFullHeight() {
     val params = layoutParams ?: return
     params.width = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -153,3 +159,33 @@ fun View.wrapContent() {
     params.height = ViewGroup.LayoutParams.WRAP_CONTENT
     layoutParams = params
 }
+
+fun EditText.listenEditorAction(targetActionId: Int, callback: () -> Unit) {
+    setOnEditorActionListener { _, actionId, _ ->
+        if (actionId == targetActionId) callback.invoke()
+        false
+    }
+}
+
+fun EditText.listenActionDone(callback: () -> Unit) {
+    listenEditorAction(EditorInfo.IME_ACTION_DONE, callback)
+}
+
+fun EditText.listenActionSend(callback: () -> Unit) {
+    listenEditorAction(EditorInfo.IME_ACTION_SEND, callback)
+}
+
+fun EditText.listenActionNext(callback: () -> Unit) {
+    listenEditorAction(EditorInfo.IME_ACTION_NEXT, callback)
+}
+
+fun EditText.listenActionSearch(callback: () -> Unit) {
+    listenEditorAction(EditorInfo.IME_ACTION_SEARCH, callback)
+}
+
+fun EditText.addClearBtn(resId: Int, onTextCleared: (() -> Unit)?) {
+    if (context is LifecycleOwner) {
+        InputKt(context.safeCast<LifecycleOwner>()!!, this).addClearIcon(resId, onTextCleared)
+    }
+}
+//V0.2 end
