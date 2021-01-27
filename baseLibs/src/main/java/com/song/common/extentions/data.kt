@@ -64,10 +64,10 @@ fun SimpleDateFormat.safeParse(str: String?): Date? {
         null
     }
 }
-fun String.md5(src: String): String? {
+fun String.md5(): String? {
     return try {
         val md5: MessageDigest = MessageDigest.getInstance("MD5")
-        md5.update(src.toByteArray())
+        md5.update(toByteArray())
         val encryption: ByteArray = md5.digest()
         val result = StringBuilder()
         for (b in encryption) {
