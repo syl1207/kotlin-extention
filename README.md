@@ -30,7 +30,7 @@ btn.setNoFastClickListener{
 
 }
 ```
-- ##### View.matchParent(wrapContent..)
+- ##### View.matchParent/wrapContent ...
 > 动态更改layoutParams
 ```kotlin
 view.matchParent()
@@ -38,6 +38,18 @@ view.wrapContent()
 view.fullWidthWrapHeight()
 view.wrapWidthFullHeight()
 ```
+
+- ##### EditText.listenEditorAction
+> 监听editText的editorAction事件
+```kotlin
+listenEditorAction(EditorInfo.IME_ACTION_DONE, callback)
+```
+
+- ##### EditText.listenActionDone/listenActionSend/listenActionNext/listenActionSearch
+> 监听editText的actionDone/ActionSend/ActionNext/ActionSearch事件
+
+- ##### EditText.addClearBtn(resId: Int, onTextCleared: (() -> Unit)?)
+> 给editText右侧添加clearBtn (仅当前context的lifeCycleOwner不为空时生效) 
 
 
 ## Bitmap
@@ -142,12 +154,32 @@ context.hasPermission(
 - #### Context.getScreenWidth
 > 获取屏幕宽高
 
+- #### Context.versionCode
+> 当前apk版本号
+
+- #### Context.versionName
+> 当前apk版本号
+
+- #### Context.isScreenPortrait
+> 是否竖屏
+
 
 - #### Context.dp2Px
 > dp 转为px
+
+## OKhttp
+
+- #### OkHttpClient.Builder.supportHttps
+> 支持https
+
+- #### StringResponseInterceptor(private val handler: (String) -> String) : Interceptor
+>  可用于统一处理的拦截器，比如解密
 
 
 ## 其他
 - #### InputStream.toByteArray
 > inputStream 转为byte数组
+
+- #### String.md5
+> 获取string的md5值
 
