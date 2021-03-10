@@ -49,7 +49,7 @@ publish {
     userOrg = 'songsyl1207'//bintray.com用户名
     groupId = 'com.syl1207.common'//jcenter上的路径
     artifactId = 'kotlin-extentions'//项目名称
-    publishVersion = '0.0.1'//版本号
+    publishVersion = '0.0.2'//版本号
     desc = 'common kotlin extions'//描述，不重要
     website = 'https://github.com/syl1207/extentions/blob/master/README.md'//网站，不重要
 }

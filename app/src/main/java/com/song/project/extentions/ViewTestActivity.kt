@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.song.common.extentions.*
 import kotlinx.android.synthetic.main.activity_view_test.*
+import java.io.File
 
 class ViewTestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

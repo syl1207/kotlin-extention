@@ -1,4 +1,4 @@
-package com.song.common.extentions.other
+package com.song.common.extentions.core
 
 import android.text.TextWatcher
 import android.widget.EditText
@@ -7,6 +7,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import com.song.common.extentions.other.TextViewUtils
 
 class InputKt(lifecycleOwner: LifecycleOwner, private val editText: EditText) {
     private lateinit var textWatcher: TextWatcher

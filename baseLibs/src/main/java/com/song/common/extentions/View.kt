@@ -15,7 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import com.song.common.extentions.other.InputKt
+import com.song.common.extentions.core.InputKt
 
 fun TextView.drawableTop(id: Int?, drawablePadding: Int = 0) {
     customCompoundDrawables(topId = id, drawablePadding = drawablePadding)
@@ -185,7 +185,10 @@ fun EditText.listenActionSearch(callback: () -> Unit) {
 
 fun EditText.addClearBtn(resId: Int, onTextCleared: (() -> Unit)?) {
     if (context is LifecycleOwner) {
-        InputKt(context.safeCast<LifecycleOwner>()!!, this).addClearIcon(resId, onTextCleared)
+        InputKt(
+            context.safeCast<LifecycleOwner>()!!,
+            this
+        ).addClearIcon(resId, onTextCleared)
     }
 }
 //V0.2 end

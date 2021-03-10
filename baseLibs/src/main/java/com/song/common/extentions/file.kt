@@ -12,3 +12,4 @@ fun ByteArray.save2File(file: File) {
         e.printStackTrace()
     }
 }
+
