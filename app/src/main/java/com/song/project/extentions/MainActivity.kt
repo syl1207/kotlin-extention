@@ -6,26 +6,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.song.common.extentions.goToActivity
-import com.song.common.extentions.hasPermission
-import com.song.common.extentions.log
+import com.song.common.extentions.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (BuildConfig.DEBUG){
-            startActivity(Intent(this,TestActivity::class.java))
-            finish()
-        }
+        CustomToast.init(application)
         ActivityCompat.requestPermissions(
             this,
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE
+            ),
             1001
         )
 
         bitmap.setOnClickListener {
+            versionCode.toString().log()
+            return@setOnClickListener
             goToActivity<BitmapTestActivity>()
         }
         view.setOnClickListener {
@@ -36,15 +36,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         logTest.setOnClickListener {
-            goToActivity<LogTestActivity>()
+//            goToActivity<LogTestActivity>()
+            val imei = getImei()
+            toast(imei ?: "imei is null")
         }
-        val hasPermission = hasPermission(Manifest.permission.READ_PHONE_STATE)
-        hasPermission.toString().log()
-        hasPermission(
+
+        animTest.setNoFastClickListener {
+            goToActivity<AnimationTestActivity>()
+        }
+        animTest.performClick()
+
+        val hasPermission = checkPermission(Manifest.permission.READ_PHONE_STATE)
+        checkPermission(
             arrayOf(
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
         )
+
     }
+
 }

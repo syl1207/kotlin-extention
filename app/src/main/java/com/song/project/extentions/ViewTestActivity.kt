@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.song.common.extentions.*
 import kotlinx.android.synthetic.main.activity_view_test.*
-import java.io.File
+import kotlin.concurrent.thread
 
 class ViewTestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class ViewTestActivity : AppCompatActivity() {
 
         var i = 0
         selector.setOnClickListener {
-            val textView = it.safeCast<TextView>()
+            val textView = it.cast<TextView>()
             textView?.pressedStateTextColor("#0000ff", "#00ff00")
             if (i++ % 5 == 0) {
                 textView?.pressedStateBackground("#ff0000", "#66ff0000")
@@ -50,6 +50,17 @@ class ViewTestActivity : AppCompatActivity() {
 
         fastClick.setNoFastClickListener {
             "click--".log()
+            thread {
+                val toString = input.text.toString()
+                val path = "${filesDir}/11/a.txt"
+                path.log()
+                toString.save2File(path)
+            }
+        }
+
+        var count = 0
+        toast.setNoFastClickListener {
+            "hello   ${count++}".toastIt()
         }
     }
 

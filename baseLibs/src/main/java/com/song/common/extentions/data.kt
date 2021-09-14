@@ -3,6 +3,7 @@ package com.song.common.extentions
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.util.Base64
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.security.MessageDigest
@@ -50,13 +51,13 @@ fun String.toHtmlText(): Spanned {
     }
 }
 
-inline fun <reified T> Any.safeCast(): T? = if (this is T) {
+inline fun <reified T> Any.cast(): T? = if (this is T) {
     this
 } else {
     null
 }
 
-fun SimpleDateFormat.safeParse(str: String?): Date? {
+fun SimpleDateFormat.toDateOrNull(str: String?): Date? {
     if (str.isNullOrEmpty()) return null
     return try {
         parse(str)
@@ -64,6 +65,7 @@ fun SimpleDateFormat.safeParse(str: String?): Date? {
         null
     }
 }
+
 fun String.md5(): String? {
     return try {
         val md5: MessageDigest = MessageDigest.getInstance("MD5")
@@ -81,5 +83,13 @@ fun String.md5(): String? {
     } catch (e: NoSuchAlgorithmException) {
         null
     }
+}
+
+fun String.base64Decode(): ByteArray? {
+    return Base64.decode(this, Base64.DEFAULT)
+}
+
+fun ByteArray.base64Encode(): String {
+    return Base64.encodeToString(this, 0, size, Base64.DEFAULT)
 }
 

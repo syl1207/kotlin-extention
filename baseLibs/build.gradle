@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'com.novoda.bintray-release'  //添加
+//apply plugin: 'com.novoda.bintray-release'  //添加
 
 android {
     compileSdkVersion 30
@@ -45,11 +45,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
 }
 
-publish {
-    userOrg = 'songsyl1207'//bintray.com用户名
-    groupId = 'com.syl1207.common'//jcenter上的路径
-    artifactId = 'kotlin-extentions'//项目名称
-    publishVersion = '0.0.2'//版本号
-    desc = 'common kotlin extions'//描述，不重要
-    website = 'https://github.com/syl1207/extentions/blob/master/README.md'//网站，不重要
-}
+//jcenter跑路了，// TODO 换其他的
+//publish {
+//    userOrg = 'songsyl1207'//bintray.com用户名
+//    groupId = 'com.syl1207.common'//jcenter上的路径
+//    artifactId = 'kotlin-extentions'//项目名称
+//    publishVersion = '0.0.2'//版本号
+//    desc = 'common kotlin extions'//描述，不重要
+//    website = 'https://github.com/syl1207/extentions/blob/master/README.md'//网站，不重要
+//}

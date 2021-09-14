@@ -7,7 +7,9 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.telephony.TelephonyManager
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import java.io.Serializable
@@ -26,23 +28,23 @@ fun Context.drawable(id: Int): Drawable? {
     return ContextCompat.getDrawable(this, id)
 }
 
-
 /**
  * reduce code length
  */
-fun Context.hasPermission(permission: String): Boolean {
+fun Context.checkPermission(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
 
-fun Context.hasPermission(permissions: Array<String>): Boolean {
+fun Context.checkPermission(permissions: Array<String>): Boolean {
     permissions.forEach {
-        if (hasPermission(it).not()) return false
+        if (checkPermission(it).not()) return false
     }
     return true
 }
 
-fun Context.versionCode(): Long {
-    return try {
+val Context.versionCode
+    get() = try {
+        Log.e("krik", "get Version Code")
         val packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             packageInfo.longVersionCode
@@ -53,7 +55,6 @@ fun Context.versionCode(): Long {
         e.printStackTrace()
         0L
     }
-}
 
 fun Context.versionName(): String? {
     return try {
@@ -131,6 +132,16 @@ fun addParamsToIntent(
             is Float -> intent.putExtra(it.first, second)
             //todo 完善常用类型
         }
+    }
+}
+
+fun Context.getImei(): String? {
+    return try {
+        val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        telephonyManager.deviceId
+    } catch (e: java.lang.Exception) {
+        e.printStackTrace()
+        null
     }
 }
 
